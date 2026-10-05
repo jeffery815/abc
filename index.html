@@ -1,27 +1,54 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
+
     <meta charset="UTF-8">
 
-    <!-- 手機版設定 -->
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
 
     <title>軍事媒體測驗</title>
 
+
     <style>
+
+        /* ==============================
+           基本設定
+        ============================== */
+
         * {
             box-sizing: border-box;
+
             -webkit-tap-highlight-color: transparent;
+
+            -webkit-user-select: none;
+            user-select: none;
+
+            -webkit-touch-callout: none;
         }
 
-        html {
-            touch-action: manipulation;
-        }
 
+        html,
         body {
+
             margin: 0;
             padding: 0;
+
+            width: 100%;
+            min-height: 100%;
+
+            touch-action: manipulation;
+
+            overscroll-behavior: none;
+        }
+
+
+        body {
+
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
@@ -30,9 +57,8 @@
                 sans-serif;
 
             background: #f2f4f7;
-            color: #222;
 
-            touch-action: manipulation;
+            color: #222;
 
             -webkit-user-select: none;
             user-select: none;
@@ -40,48 +66,88 @@
             -webkit-touch-callout: none;
         }
 
+
+        /* ==============================
+           主容器
+        ============================== */
+
         .container {
+
             width: 100%;
+
             max-width: 600px;
+
             margin: 0 auto;
-            padding: 20px 16px 40px;
+
+            padding:
+                20px
+                16px
+                50px;
         }
+
+
+        /* ==============================
+           標題
+        ============================== */
 
         h1 {
+
             text-align: center;
-            margin: 10px 0 25px;
+
             font-size: 28px;
+
+            margin:
+                10px
+                0
+                25px;
         }
 
-        h2 {
-            font-size: 22px;
-            line-height: 1.5;
-            margin: 10px 0 20px;
-        }
+
+        /* ==============================
+           卡片
+        ============================== */
 
         .card {
+
             background: white;
+
             border-radius: 18px;
+
             padding: 20px;
+
             margin-bottom: 18px;
 
             box-shadow:
-                0 4px 12px rgba(0, 0, 0, 0.08);
+                0 4px 14px
+                rgba(0,0,0,0.08);
         }
 
-        /* 所有按鈕 */
+
+        /* ==============================
+           按鈕
+        ============================== */
+
         button {
+
+            display: block;
+
             width: 100%;
-            min-height: 52px;
+
+            min-height: 54px;
+
+            padding:
+                12px
+                16px;
+
+            margin-top: 10px;
 
             border: none;
+
             border-radius: 14px;
 
             font-size: 18px;
-            font-weight: 600;
 
-            margin-top: 10px;
-            padding: 12px 16px;
+            font-weight: 600;
 
             cursor: pointer;
 
@@ -92,156 +158,276 @@
 
             -webkit-touch-callout: none;
 
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color:
+                transparent;
 
-            transition: transform 0.08s ease,
-                        opacity 0.08s ease;
+            outline: none;
+
+            -webkit-appearance: none;
+
+            appearance: none;
+
+            transition:
+                transform 0.06s ease,
+                opacity 0.06s ease;
         }
+
 
         button:active {
-            transform: scale(0.97);
-            opacity: 0.85;
+
+            transform:
+                scale(0.97);
+
+            opacity: 0.82;
         }
+
+
+        /* ==============================
+           按鈕顏色
+        ============================== */
 
         .random-btn {
+
             background: #222;
+
             color: white;
-            margin-bottom: 20px;
+
+            margin-bottom: 22px;
         }
+
 
         .question-btn {
+
             background: #e9eef5;
+
             color: #222;
         }
+
 
         .answer-btn {
+
             background: #3b82f6;
+
             color: white;
         }
 
+
         .hint-btn {
+
             background: #f4c430;
+
             color: #222;
         }
 
+
         .next-btn {
+
             background: #22a06b;
+
             color: white;
         }
+
 
         .back-btn {
+
             background: #777;
+
             color: white;
         }
 
-        .question-number {
-            text-align: center;
-            font-size: 16px;
-            color: #777;
-            margin-bottom: 8px;
+
+        /* ==============================
+           題目選單標題
+        ============================== */
+
+        .menu-title {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            margin-bottom: 10px;
         }
 
+
+        /* ==============================
+           題目編號
+        ============================== */
+
+        .question-number {
+
+            text-align: center;
+
+            font-size: 16px;
+
+            color: #777;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* ==============================
+           題目
+        ============================== */
+
         .question {
+
             font-size: 22px;
+
             font-weight: 700;
+
             line-height: 1.6;
 
             background: #f8fafc;
+
             padding: 18px;
+
             border-radius: 14px;
 
             margin-bottom: 15px;
-        }
 
-        .answer {
-            margin-top: 18px;
-            padding: 18px;
-
-            background: #f0fdf4;
-            border-radius: 14px;
-
-            font-size: 20px;
-            line-height: 1.7;
-
-            white-space: pre-wrap;
             word-break: break-word;
         }
 
-        .hint-answer {
+
+        /* ==============================
+           完整答案
+        ============================== */
+
+        .answer {
+
             margin-top: 18px;
+
+            padding: 18px;
+
+            background: #f0fdf4;
+
+            border-radius: 14px;
+
+            font-size: 20px;
+
+            line-height: 1.7;
+
+            white-space: pre-wrap;
+
+            word-break: break-word;
+        }
+
+
+        /* ==============================
+           一個字一個字提示
+        ============================== */
+
+        .hint-answer {
+
+            margin-top: 18px;
+
             padding: 18px;
 
             background: #fffbea;
+
             border-radius: 14px;
 
             font-size: 22px;
+
             line-height: 1.8;
 
             word-break: break-all;
+
             text-align: left;
+
+            letter-spacing: 1px;
         }
+
+
+        /* ==============================
+           隱藏
+        ============================== */
 
         .hidden {
-            display: none;
+
+            display: none !important;
         }
 
-        .menu-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
 
-        /* 手機小螢幕 */
+        /* ==============================
+           小螢幕
+        ============================== */
+
         @media (max-width: 380px) {
 
             .container {
+
                 padding-left: 12px;
+
                 padding-right: 12px;
             }
 
+
             h1 {
+
                 font-size: 25px;
             }
 
-            h2 {
-                font-size: 20px;
-            }
 
             .question {
+
                 font-size: 20px;
             }
 
+
             button {
+
                 font-size: 17px;
             }
+
+
+            .hint-answer {
+
+                font-size: 20px;
+            }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-    <!-- ========================= -->
-    <!-- 首頁 -->
-    <!-- ========================= -->
+
+    <!-- =================================
+         首頁
+    ================================== -->
 
     <div id="homePage">
 
-        <h1>📚 軍事媒體測驗</h1>
+        <h1>
+            📚 軍事媒體測驗
+        </h1>
+
 
         <div class="card">
 
             <button
+                id="randomButton"
                 class="random-btn"
-                type="button"
-                onclick="startRandomQuiz()">
+                type="button">
+
                 🎲 隨機出題
+
             </button>
 
+
             <div class="menu-title">
+
                 📖 選擇題目
+
             </div>
+
 
             <div id="questionList"></div>
 
@@ -250,18 +436,23 @@
     </div>
 
 
-    <!-- ========================= -->
-    <!-- 測驗頁 -->
-    <!-- ========================= -->
 
-    <div id="quizPage" class="hidden">
+    <!-- =================================
+         測驗頁
+    ================================== -->
+
+    <div
+        id="quizPage"
+        class="hidden">
 
         <div class="card">
+
 
             <div
                 id="questionNumber"
                 class="question-number">
             </div>
+
 
             <div
                 id="questionText"
@@ -269,15 +460,20 @@
             </div>
 
 
-            <!-- 完整答案 -->
+
+            <!-- ==========================
+                 完整答案
+            =========================== -->
 
             <button
                 id="answerButton"
                 class="answer-btn"
-                type="button"
-                onclick="showFullAnswer()">
+                type="button">
+
                 🔵 顯示完整答案
+
             </button>
+
 
             <div
                 id="fullAnswer"
@@ -285,15 +481,20 @@
             </div>
 
 
-            <!-- 一個字一個字提示 -->
+
+            <!-- ==========================
+                 一個字一個字提示
+            =========================== -->
 
             <button
                 id="hintButton"
                 class="hint-btn"
-                type="button"
-                onclick="showNextCharacter()">
+                type="button">
+
                 🟡 一個字一個字提示
+
             </button>
+
 
             <div
                 id="hintAnswer"
@@ -301,444 +502,830 @@
             </div>
 
 
-            <!-- 下一題 -->
+
+            <!-- ==========================
+                 下一題
+            =========================== -->
 
             <button
+                id="nextButton"
                 class="next-btn"
-                type="button"
-                onclick="nextQuestion()">
+                type="button">
+
                 ➡️ 下一題
+
             </button>
 
 
-            <!-- 回題目選擇 -->
+
+            <!-- ==========================
+                 回首頁
+            =========================== -->
 
             <button
+                id="backButton"
                 class="back-btn"
-                type="button"
-                onclick="backToHome()">
+                type="button">
+
                 ← 回到題目選擇
+
             </button>
+
 
         </div>
 
     </div>
 
+
 </div>
+
 
 
 <script>
 
-    /* ======================================
-       題目資料
-    ====================================== */
 
-    const questions = [
+/* ==========================================
+   題目資料
+========================================== */
 
-        {
-            question: "軍隊所擁有的軍事媒體?",
-            answer: "軍事新聞通訊社、青年日報、漢聲電台"
-        },
+const questions = [
 
-        {
-            question: "新聞必須力求什麽，否則只能視為一種評論、判斷或帶有私心的個人見解。?",
-            answer: "「客觀」、「公正」。"
-        },
+    {
+        question:
+            "軍隊所擁有的軍事媒體?",
 
-        {
-            question: "要如何實施假訊息反制與防範?",
-            answer: "強化官兵媒體識讀能力，針對資訊接觸，採取懷疑標題、留意連結、調查來源及參考其他報導等方式，或是透由臺灣事實查核中心等第三方民間組織查清。"
-        },
-
-        {
-            question: "新聞處理作法重點為何?",
-            answer: "主動說、誠實說、說清楚。"
-        },
-
-        {
-            question: "識別假新聞3大技巧",
-            answer: "確認新聞來源、確認內容是否有可信度、留意圖片與日期。"
-        }
-
-    ];
+        answer:
+            "軍事新聞通訊社、青年日報、漢聲電台"
+    },
 
 
-    /* ======================================
-       目前狀態
-    ====================================== */
+    {
+        question:
+            "新聞必須力求什麽，否則只能視為一種評論、判斷或帶有私心的個人見解。?",
 
-    let currentQuestion = 0;
-
-    let quizOrder = [];
-
-    let revealedCount = 0;
+        answer:
+            "「客觀」、「公正」。"
+    },
 
 
-    /* ======================================
-       建立題目選單
-    ====================================== */
+    {
+        question:
+            "要如何實施假訊息反制與防範?",
 
-    function createQuestionList() {
+        answer:
+            "強化官兵媒體識讀能力，針對資訊接觸，採取懷疑標題、留意連結、調查來源及參考其他報導等方式，或是透由臺灣事實查核中心等第三方民間組織查清。"
+    },
 
-        const list = document.getElementById("questionList");
 
-        list.innerHTML = "";
+    {
+        question:
+            "新聞處理作法重點為何?",
 
-        questions.forEach((item, index) => {
+        answer:
+            "主動說、誠實說、說清楚。"
+    },
 
-            const button = document.createElement("button");
+
+    {
+        question:
+            "識別假新聞3大技巧",
+
+        answer:
+            "確認新聞來源、確認內容是否有可信度、留意圖片與日期。"
+    }
+
+];
+
+
+
+/* ==========================================
+   狀態
+========================================== */
+
+let currentQuestion = 0;
+
+let quizOrder = [];
+
+let revealedCount = 0;
+
+
+
+/* ==========================================
+   取得 DOM
+========================================== */
+
+const homePage =
+    document.getElementById("homePage");
+
+const quizPage =
+    document.getElementById("quizPage");
+
+const questionList =
+    document.getElementById("questionList");
+
+const questionNumber =
+    document.getElementById("questionNumber");
+
+const questionText =
+    document.getElementById("questionText");
+
+const fullAnswer =
+    document.getElementById("fullAnswer");
+
+const hintAnswer =
+    document.getElementById("hintAnswer");
+
+const hintButton =
+    document.getElementById("hintButton");
+
+const answerButton =
+    document.getElementById("answerButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const backButton =
+    document.getElementById("backButton");
+
+const randomButton =
+    document.getElementById("randomButton");
+
+
+
+/* ==========================================
+   建立題目選單
+========================================== */
+
+function createQuestionList() {
+
+    questionList.innerHTML = "";
+
+
+    questions.forEach(
+        function(item, index) {
+
+            const button =
+                document.createElement("button");
+
 
             button.type = "button";
 
-            button.className = "question-btn";
+            button.className =
+                "question-btn";
 
-            button.textContent = `第 ${index + 1} 題`;
 
-            button.onclick = function () {
+            button.textContent =
+                "第 " +
+                (index + 1) +
+                " 題";
 
-                startQuiz(index);
 
-            };
+            button.addEventListener(
+                "click",
+                function(event) {
 
-            list.appendChild(button);
+                    event.preventDefault();
 
-        });
+                    startQuiz(index);
+
+                }
+            );
+
+
+            questionList.appendChild(button);
+
+        }
+    );
+
+}
+
+
+
+/* ==========================================
+   開始指定題目
+========================================== */
+
+function startQuiz(index) {
+
+    quizOrder =
+        questions.map(
+            function(_, i) {
+                return i;
+            }
+        );
+
+
+    currentQuestion = index;
+
+
+    showQuizPage();
+
+}
+
+
+
+/* ==========================================
+   隨機出題
+========================================== */
+
+function startRandomQuiz() {
+
+    quizOrder =
+        questions.map(
+            function(_, i) {
+                return i;
+            }
+        );
+
+
+    shuffleArray(quizOrder);
+
+
+    currentQuestion = 0;
+
+
+    showQuizPage();
+
+}
+
+
+
+/* ==========================================
+   洗牌
+========================================== */
+
+function shuffleArray(array) {
+
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            array[i],
+            array[j]
+        ] =
+        [
+            array[j],
+            array[i]
+        ];
 
     }
 
-
-    /* ======================================
-       開始指定題目
-    ====================================== */
-
-    function startQuiz(index) {
-
-        quizOrder = questions.map((_, i) => i);
-
-        currentQuestion = index;
-
-        showQuizPage();
-
-    }
+}
 
 
-    /* ======================================
-       隨機出題
-    ====================================== */
 
-    function startRandomQuiz() {
+/* ==========================================
+   顯示測驗頁
+========================================== */
 
-        quizOrder = questions.map((_, i) => i);
+function showQuizPage() {
 
-        shuffleArray(quizOrder);
+    homePage.classList.add("hidden");
 
-        currentQuestion = 0;
-
-        showQuizPage();
-
-    }
+    quizPage.classList.remove("hidden");
 
 
-    /* ======================================
-       洗牌
-    ====================================== */
+    loadQuestion();
 
-    function shuffleArray(array) {
 
-        for (
-            let i = array.length - 1;
-            i > 0;
-            i--
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+
+/* ==========================================
+   載入題目
+========================================== */
+
+function loadQuestion() {
+
+    const questionIndex =
+        quizOrder[currentQuestion];
+
+
+    const item =
+        questions[questionIndex];
+
+
+    questionNumber.textContent =
+        "第 " +
+        (currentQuestion + 1) +
+        " / " +
+        quizOrder.length +
+        " 題";
+
+
+    questionText.textContent =
+        item.question;
+
+
+
+    /* 清除完整答案 */
+
+    fullAnswer.textContent = "";
+
+    fullAnswer.classList.add("hidden");
+
+
+
+    /* 清除提示 */
+
+    hintAnswer.textContent = "";
+
+    hintAnswer.classList.add("hidden");
+
+
+    revealedCount = 0;
+
+
+    hintButton.textContent =
+        "🟡 一個字一個字提示";
+
+}
+
+
+
+/* ==========================================
+   顯示完整答案
+========================================== */
+
+function showFullAnswer() {
+
+    const questionIndex =
+        quizOrder[currentQuestion];
+
+
+    const answer =
+        questions[questionIndex].answer;
+
+
+    fullAnswer.textContent =
+        answer;
+
+
+    fullAnswer.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+
+/* ==========================================
+   判斷標點符號
+========================================== */
+
+function isPunctuation(char) {
+
+    return /[\s.,!?，。！？、；：：「」『』（）()【】《》〈〉…—\-_]/.test(
+        char
+    );
+
+}
+
+
+
+/* ==========================================
+   產生提示文字
+========================================== */
+
+function buildHint(answer, count) {
+
+    let result = "";
+
+
+    for (
+        let i = 0;
+        i < answer.length;
+        i++
+    ) {
+
+        const char =
+            answer[i];
+
+
+        /*
+         * 已經顯示的字
+         */
+
+        if (i < count) {
+
+            result += char;
+
+        }
+
+
+        /*
+         * 標點符號
+         * 永遠直接顯示
+         */
+
+        else if (
+            isPunctuation(char)
         ) {
 
-            const j =
-                Math.floor(Math.random() * (i + 1));
-
-            [
-                array[i],
-                array[j]
-            ] =
-            [
-                array[j],
-                array[i]
-            ];
-
-        }
-
-    }
-
-
-    /* ======================================
-       顯示測驗頁
-    ====================================== */
-
-    function showQuizPage() {
-
-        document
-            .getElementById("homePage")
-            .classList.add("hidden");
-
-        document
-            .getElementById("quizPage")
-            .classList.remove("hidden");
-
-        loadQuestion();
-
-        window.scrollTo(0, 0);
-
-    }
-
-
-    /* ======================================
-       載入目前題目
-    ====================================== */
-
-    function loadQuestion() {
-
-        const questionIndex =
-            quizOrder.length > 0
-            ? quizOrder[currentQuestion]
-            : currentQuestion;
-
-        const item =
-            questions[questionIndex];
-
-
-        document.getElementById("questionNumber")
-            .textContent =
-            `第 ${currentQuestion + 1} / ${quizOrder.length || questions.length} 題`;
-
-
-        document.getElementById("questionText")
-            .textContent =
-            item.question;
-
-
-        /* 清除答案 */
-
-        document
-            .getElementById("fullAnswer")
-            .textContent = "";
-
-        document
-            .getElementById("fullAnswer")
-            .classList.add("hidden");
-
-
-        /* 清除提示 */
-
-        revealedCount = 0;
-
-        document
-            .getElementById("hintAnswer")
-            .textContent = "";
-
-        document
-            .getElementById("hintAnswer")
-            .classList.add("hidden");
-
-
-        document
-            .getElementById("hintButton")
-            .textContent =
-            "🟡 一個字一個字提示";
-
-    }
-
-
-    /* ======================================
-       顯示完整答案
-    ====================================== */
-
-    function showFullAnswer() {
-
-        const questionIndex =
-            quizOrder.length > 0
-            ? quizOrder[currentQuestion]
-            : currentQuestion;
-
-        const item =
-            questions[questionIndex];
-
-
-        const answer =
-            document.getElementById("fullAnswer");
-
-
-        answer.textContent =
-            item.answer;
-
-
-        answer.classList.remove("hidden");
-
-    }
-
-
-    /* ======================================
-       一個字一個字提示
-    ====================================== */
-
-    function showNextCharacter() {
-
-        const questionIndex =
-            quizOrder.length > 0
-            ? quizOrder[currentQuestion]
-            : currentQuestion;
-
-        const answer =
-            questions[questionIndex].answer;
-
-
-        const hint =
-            document.getElementById("hintAnswer");
-
-
-        hint.classList.remove("hidden");
-
-
-        /* 如果已經全部顯示 */
-
-        if (revealedCount >= answer.length) {
-
-            hint.textContent = answer;
-
-            return;
+            result += char;
 
         }
 
 
-        revealedCount++;
-
-
-        let result = "";
-
-
-        for (
-            let i = 0;
-            i < answer.length;
-            i++
-        ) {
-
-            const char = answer[i];
-
-
-            /*
-             * 已經提示的文字
-             */
-
-            if (i < revealedCount) {
-
-                result += char;
-
-            }
-
-            /*
-             * 標點符號直接顯示
-             */
-
-            else if (
-                isPunctuation(char) ||
-                char === " "
-            ) {
-
-                result += char;
-
-            }
-
-            /*
-             * 還沒有提示的中文字
-             */
-
-            else {
-
-                result += "＿";
-
-            }
-
-        }
-
-
-        hint.textContent = result;
-
-
-        /* 全部提示完成 */
-
-        if (revealedCount >= answer.length) {
-
-            document
-                .getElementById("hintButton")
-                .textContent =
-                "✅ 已全部提示";
-
-        }
-
-    }
-
-
-    /* ======================================
-       判斷標點符號
-    ====================================== */
-
-    function isPunctuation(char) {
-
-        return /[\s.,!?，。！？、；：：「」『』（）()【】《》〈〉…—\-]/.test(char);
-
-    }
-
-
-    /* ======================================
-       下一題
-    ====================================== */
-
-    function nextQuestion() {
-
-        if (currentQuestion < quizOrder.length - 1) {
-
-            currentQuestion++;
-
-            loadQuestion();
-
-            window.scrollTo(0, 0);
-
-        }
+        /*
+         * 尚未顯示
+         */
 
         else {
 
-            alert("🎉 已經完成所有題目！");
-
-            backToHome();
+            result += "＿";
 
         }
 
     }
 
 
-    /* ======================================
-       回首頁
-    ====================================== */
+    return result;
 
-    function backToHome() {
+}
 
-        document
-            .getElementById("quizPage")
-            .classList.add("hidden");
 
-        document
-            .getElementById("homePage")
-            .classList.remove("hidden");
 
-        window.scrollTo(0, 0);
+/* ==========================================
+   一個字一個字提示
+========================================== */
+
+function showNextCharacter() {
+
+    const questionIndex =
+        quizOrder[currentQuestion];
+
+
+    const answer =
+        questions[questionIndex].answer;
+
+
+    hintAnswer.classList.remove(
+        "hidden"
+    );
+
+
+    /*
+     * 如果目前位置是標點符號，
+     * 自動跳過。
+     */
+
+    while (
+        revealedCount < answer.length &&
+        isPunctuation(
+            answer[revealedCount]
+        )
+    ) {
+
+        revealedCount++;
 
     }
 
 
-    /* ======================================
-       初始化
-    ====================================== */
+    /*
+     * 如果已經完成
+     */
 
-    createQuestionList();
+    if (
+        revealedCount >=
+        answer.length
+    ) {
+
+        hintAnswer.textContent =
+            answer;
+
+
+        hintButton.textContent =
+            "✅ 已全部提示";
+
+
+        return;
+
+    }
+
+
+    /*
+     * 顯示下一個「字」
+     */
+
+    revealedCount++;
+
+
+    /*
+     * 顯示後，再自動跳過標點符號
+     */
+
+    while (
+        revealedCount < answer.length &&
+        isPunctuation(
+            answer[revealedCount]
+        )
+    ) {
+
+        revealedCount++;
+
+    }
+
+
+    /*
+     * 更新畫面
+     */
+
+    hintAnswer.textContent =
+        buildHint(
+            answer,
+            revealedCount
+        );
+
+
+    /*
+     * 如果已經全部完成
+     */
+
+    if (
+        revealedCount >=
+        answer.length
+    ) {
+
+        hintButton.textContent =
+            "✅ 已全部提示";
+
+    }
+
+}
+
+
+
+/* ==========================================
+   下一題
+========================================== */
+
+function nextQuestion() {
+
+    if (
+        currentQuestion <
+        quizOrder.length - 1
+    ) {
+
+        currentQuestion++;
+
+        loadQuestion();
+
+        window.scrollTo(
+            0,
+            0
+        );
+
+    }
+
+    else {
+
+        alert(
+            "🎉 已經完成所有題目！"
+        );
+
+
+        backToHome();
+
+    }
+
+}
+
+
+
+/* ==========================================
+   回到首頁
+========================================== */
+
+function backToHome() {
+
+    quizPage.classList.add(
+        "hidden"
+    );
+
+
+    homePage.classList.remove(
+        "hidden"
+    );
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+
+/* ==========================================
+   按鈕事件
+========================================== */
+
+randomButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+        startRandomQuiz();
+
+    }
+);
+
+
+answerButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+        showFullAnswer();
+
+    }
+);
+
+
+hintButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+        showNextCharacter();
+
+    }
+);
+
+
+nextButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+        nextQuestion();
+
+    }
+);
+
+
+backButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+        backToHome();
+
+    }
+);
+
+
+
+/* ==========================================
+   iPhone Safari 防雙擊放大
+========================================== */
+
+let lastTouchTime = 0;
+
+
+document.addEventListener(
+    "touchend",
+    function(event) {
+
+        const now =
+            Date.now();
+
+
+        /*
+         * 如果短時間內再次觸碰，
+         * 阻止 Safari 的雙擊縮放。
+         */
+
+        if (
+            now - lastTouchTime <
+            300
+        ) {
+
+            if (
+                event.target.closest(
+                    "button"
+                )
+            ) {
+
+                event.preventDefault();
+
+            }
+
+        }
+
+
+        lastTouchTime = now;
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+
+/* ==========================================
+   防止雙擊事件
+========================================== */
+
+document.addEventListener(
+    "dblclick",
+    function(event) {
+
+        if (
+            event.target.closest(
+                "button"
+            )
+        ) {
+
+            event.preventDefault();
+
+        }
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+
+/* ==========================================
+   防止 iPhone Safari 手勢縮放
+========================================== */
+
+document.addEventListener(
+    "gesturestart",
+    function(event) {
+
+        event.preventDefault();
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+document.addEventListener(
+    "gesturechange",
+    function(event) {
+
+        event.preventDefault();
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+document.addEventListener(
+    "gestureend",
+    function(event) {
+
+        event.preventDefault();
+
+    },
+    {
+        passive: false
+    }
+);
+
+
+
+/* ==========================================
+   初始化
+========================================== */
+
+createQuestionList();
 
 </script>
 
+
 </body>
+
 </html>
