@@ -1,0 +1,15 @@
+{
+  "name": "軍事媒體測驗",
+  "short_name": "軍事測驗",
+  "description": "軍事媒體與相關課程題庫測驗",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f5f5",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "lang": "zh-TW",
+  "categories": [
+    "education",
+    "training"
+  ]
+}
