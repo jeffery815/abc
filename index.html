@@ -1522,6 +1522,19 @@ createQuestionList();
 
 </script>
 
+<script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+            navigator.serviceWorker.register("./sw.js")
+                .then(function(registration) {
+                    console.log("離線功能已啟用");
+                })
+                .catch(function(error) {
+                    console.log("離線功能啟用失敗:", error);
+                });
+        });
+    }
+</script>
 
 </body>
 
