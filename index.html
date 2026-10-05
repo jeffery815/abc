@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新聞識讀背誦測驗</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "PingFang TC",
+            "Noto Sans TC",
+            sans-serif;
+        background: #f5f7fa;
+        color: #222;
+    }
+
+    .container {
+        max-width: 650px;
+        margin: auto;
+        padding: 25px 18px 50px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #777;
+        margin-bottom: 25px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 20px;
+        padding: 22px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 13px;
+        font-size: 17px;
+        background: #e9edf3;
+        cursor: pointer;
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }
+
+    .primary {
+        background: #222;
+        color: white;
+    }
+
+    .question {
+        font-size: 21px;
+        line-height: 1.7;
+        font-weight: bold;
+    }
+
+    .answer {
+        margin-top: 20px;
+        padding: 18px;
+        border-radius: 14px;
+        background: #f1f3f5;
+        line-height: 1.8;
+        white-space: pre-wrap;
+    }
+
+    .hint {
+        margin-top: 15px;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .back {
+        background: transparent;
+        color: #777;
+    }
+
+    .progress {
+        text-align: center;
+        color: #888;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📚 新聞識讀背誦測驗</h1>
+    <div class="subtitle">選擇題目，開始背誦</div>
+
+    <!-- 首頁 -->
+    <div id="home">
+
+        <div class="card">
+            <button class="primary" onclick="randomQuestion()">
+                🎲 隨機出題
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>📖 選擇題目</h3>
+
+            <button onclick="startQuestion(0)">
+                第 1 題｜軍隊所擁有的軍事媒體
+            </button>
+
+            <button onclick="startQuestion(1)">
+                第 2 題｜新聞必須力求什麼
+            </button>
+
+            <button onclick="startQuestion(2)">
+                第 3 題｜假訊息反制與防範
+            </button>
+
+            <button onclick="startQuestion(3)">
+                第 4 題｜新聞處理作法重點
+            </button>
+
+            <button onclick="startQuestion(4)">
+                第 5 題｜識別假新聞 3 大技巧
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- 題目 -->
+    <div id="quiz" class="hidden">
+
+        <div class="progress" id="progress"></div>
+
+        <div class="card">
+
+            <div class="question" id="question"></div>
+
+            <div id="answer" class="answer hidden"></div>
+
+            <div class="hint" id="hint">
+                尚未顯示答案
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <button onclick="showFullAnswer()">
+                🔵 顯示完整答案
+            </button>
+
+            <button onclick="showNextHint()">
+                🟡 一個字一個字提示
+            </button>
+
+            <button onclick="nextQuestion()">
+                ➡️ 下一題
+            </button>
+
+            <button class="back" onclick="goHome()">
+                ← 回到題目選擇
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const questions = [
+
+    {
+        question: "軍隊所擁有的軍事媒體？",
+        answer: "軍事新聞通訊社、青年日報、漢聲電台"
+    },
+
+    {
+        question: "新聞必須力求什麼，否則只能視為一種評論、判斷或帶有私心的個人見解？",
+        answer: "客觀、公正"
+    },
+
+    {
+        question: "要如何實施假訊息反制與防範？",
+        answer: "強化官兵媒體識讀能力，針對資訊接觸，採取懷疑標題、留意連結、調查來源及參考其他報導等方式，或是透由臺灣事實查核中心等第三方民間組織查清。"
+    },
+
+    {
+        question: "新聞處理作法重點為何？",
+        answer: "主動說、誠實說、說清楚"
+    },
+
+    {
+        question: "識別假新聞 3 大技巧？",
+        answer: "確認新聞來源、確認內容是否有可信度、留意圖片與日期"
+    }
+
+];
+
+let currentQuestion = 0;
+let hintCount = 0;
+
+
+/* 開始題目 */
+function startQuestion(index) {
+
+    currentQuestion = index;
+    hintCount = 0;
+
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+
+    showQuestion();
+}
+
+
+/* 顯示題目 */
+function showQuestion() {
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("progress").innerText =
+        `第 ${currentQuestion + 1} 題 / ${questions.length} 題`;
+
+    document.getElementById("question").innerText =
+        q.question;
+
+    document.getElementById("answer").classList.add("hidden");
+
+    document.getElementById("hint").innerText =
+        "尚未顯示答案";
+
+    hintCount = 0;
+}
+
+
+/* 顯示完整答案 */
+function showFullAnswer() {
+
+    const answerBox = document.getElementById("answer");
+
+    answerBox.innerText =
+        questions[currentQuestion].answer;
+
+    answerBox.classList.remove("hidden");
+
+    document.getElementById("hint").innerText =
+        "已顯示完整答案";
+}
+
+
+/* 一個字一個字提示 */
+function showNextHint() {
+
+    const answer = questions[currentQuestion].answer;
+
+    hintCount++;
+
+    if (hintCount > answer.length) {
+        hintCount = answer.length;
+    }
+
+    let result = "";
+
+    for (let i = 0; i < answer.length; i++) {
+
+        if (i < hintCount) {
+            result += answer[i];
+        } else {
+
+            // 標點符號直接顯示
+            if ("，。！？、；：「」『』（）() ".includes(answer[i])) {
+                result += answer[i];
+            } else {
+                result += "＿";
+            }
+        }
+    }
+
+    const answerBox = document.getElementById("answer");
+
+    answerBox.innerText = result;
+
+    answerBox.classList.remove("hidden");
+
+    if (hintCount >= answer.length) {
+
+        document.getElementById("hint").innerText =
+            "已經顯示完整答案";
+
+    } else {
+
+        document.getElementById("hint").innerText =
+            `已提示 ${hintCount} 個字，再按一次繼續提示`;
+    }
+}
+
+
+/* 下一題 */
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion >= questions.length) {
+        currentQuestion = 0;
+    }
+
+    hintCount = 0;
+
+    showQuestion();
+}
+
+
+/* 隨機出題 */
+function randomQuestion() {
+
+    const randomIndex =
+        Math.floor(Math.random() * questions.length);
+
+    startQuestion(randomIndex);
+}
+
+
+/* 回首頁 */
+function goHome() {
+
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("home").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
