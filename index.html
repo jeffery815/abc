@@ -16,38 +16,37 @@
 
     <style>
 
-        /* ==============================
+        /* =================================
            基本設定
-        ============================== */
+        ================================= */
 
         * {
             box-sizing: border-box;
-
             -webkit-tap-highlight-color: transparent;
-
-            -webkit-user-select: none;
-            user-select: none;
-
-            -webkit-touch-callout: none;
         }
 
 
-        html,
-        body {
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
 
+            /* 只告訴瀏覽器這是一般操作 */
+            touch-action: manipulation;
+        }
+
+
+        body {
             margin: 0;
             padding: 0;
 
             width: 100%;
             min-height: 100%;
 
-            touch-action: manipulation;
+            background: #f2f4f7;
 
-            overscroll-behavior: none;
-        }
-
-
-        body {
+            color: #222;
 
             font-family:
                 -apple-system,
@@ -56,10 +55,6 @@
                 "Noto Sans TC",
                 sans-serif;
 
-            background: #f2f4f7;
-
-            color: #222;
-
             -webkit-user-select: none;
             user-select: none;
 
@@ -67,14 +62,12 @@
         }
 
 
-        /* ==============================
+        /* =================================
            主容器
-        ============================== */
+        ================================= */
 
         .container {
-
             width: 100%;
-
             max-width: 600px;
 
             margin: 0 auto;
@@ -86,12 +79,11 @@
         }
 
 
-        /* ==============================
+        /* =================================
            標題
-        ============================== */
+        ================================= */
 
         h1 {
-
             text-align: center;
 
             font-size: 28px;
@@ -103,12 +95,11 @@
         }
 
 
-        /* ==============================
+        /* =================================
            卡片
-        ============================== */
+        ================================= */
 
         .card {
-
             background: white;
 
             border-radius: 18px;
@@ -119,16 +110,15 @@
 
             box-shadow:
                 0 4px 14px
-                rgba(0,0,0,0.08);
+                rgba(0, 0, 0, 0.08);
         }
 
 
-        /* ==============================
+        /* =================================
            按鈕
-        ============================== */
+        ================================= */
 
         button {
-
             display: block;
 
             width: 100%;
@@ -151,45 +141,47 @@
 
             cursor: pointer;
 
+            background: #e9eef5;
+
+            color: #222;
+
+            /*
+             * 這裡保留 manipulation，
+             * 不再用 touchend 去攔截快速點擊。
+             */
             touch-action: manipulation;
+
+            -webkit-appearance: none;
+            appearance: none;
 
             -webkit-user-select: none;
             user-select: none;
 
             -webkit-touch-callout: none;
 
+            outline: none;
+
             -webkit-tap-highlight-color:
                 transparent;
 
-            outline: none;
-
-            -webkit-appearance: none;
-
-            appearance: none;
-
             transition:
-                transform 0.06s ease,
-                opacity 0.06s ease;
+                transform 0.05s ease,
+                opacity 0.05s ease;
         }
 
 
         button:active {
-
-            transform:
-                scale(0.97);
-
+            transform: scale(0.97);
             opacity: 0.82;
         }
 
 
-        /* ==============================
-           按鈕顏色
-        ============================== */
+        /* =================================
+           按鈕樣式
+        ================================= */
 
         .random-btn {
-
             background: #222;
-
             color: white;
 
             margin-bottom: 22px;
@@ -197,51 +189,40 @@
 
 
         .question-btn {
-
             background: #e9eef5;
-
             color: #222;
         }
 
 
         .answer-btn {
-
             background: #3b82f6;
-
             color: white;
         }
 
 
         .hint-btn {
-
             background: #f4c430;
-
             color: #222;
         }
 
 
         .next-btn {
-
             background: #22a06b;
-
             color: white;
         }
 
 
         .back-btn {
-
             background: #777;
-
             color: white;
         }
 
 
-        /* ==============================
-           題目選單標題
-        ============================== */
+        /* =================================
+           選單標題
+        ================================= */
 
         .menu-title {
-
             font-size: 20px;
 
             font-weight: 700;
@@ -250,12 +231,11 @@
         }
 
 
-        /* ==============================
-           題目編號
-        ============================== */
+        /* =================================
+           題號
+        ================================= */
 
         .question-number {
-
             text-align: center;
 
             font-size: 16px;
@@ -266,12 +246,11 @@
         }
 
 
-        /* ==============================
+        /* =================================
            題目
-        ============================== */
+        ================================= */
 
         .question {
-
             font-size: 22px;
 
             font-weight: 700;
@@ -290,12 +269,11 @@
         }
 
 
-        /* ==============================
+        /* =================================
            完整答案
-        ============================== */
+        ================================= */
 
         .answer {
-
             margin-top: 18px;
 
             padding: 18px;
@@ -314,12 +292,11 @@
         }
 
 
-        /* ==============================
-           一個字一個字提示
-        ============================== */
+        /* =================================
+           一字提示
+        ================================= */
 
         .hint-answer {
-
             margin-top: 18px;
 
             padding: 18px;
@@ -337,55 +314,51 @@
             text-align: left;
 
             letter-spacing: 1px;
+
+            min-height: 60px;
         }
 
 
-        /* ==============================
+        /* =================================
            隱藏
-        ============================== */
+        ================================= */
 
         .hidden {
-
             display: none !important;
         }
 
 
-        /* ==============================
+        /* =================================
            小螢幕
-        ============================== */
+        ================================= */
 
         @media (max-width: 380px) {
 
             .container {
-
                 padding-left: 12px;
-
                 padding-right: 12px;
             }
 
 
             h1 {
-
                 font-size: 25px;
             }
 
 
             .question {
-
                 font-size: 20px;
             }
 
 
             button {
-
                 font-size: 17px;
             }
 
 
             .hint-answer {
-
                 font-size: 20px;
             }
+
         }
 
     </style>
@@ -401,7 +374,7 @@
 
     <!-- =================================
          首頁
-    ================================== -->
+    ================================= -->
 
     <div id="homePage">
 
@@ -423,9 +396,7 @@
 
 
             <div class="menu-title">
-
                 📖 選擇題目
-
             </div>
 
 
@@ -439,7 +410,7 @@
 
     <!-- =================================
          測驗頁
-    ================================== -->
+    ================================= -->
 
     <div
         id="quizPage"
@@ -461,9 +432,9 @@
 
 
 
-            <!-- ==========================
+            <!-- =================================
                  完整答案
-            =========================== -->
+            ================================= -->
 
             <button
                 id="answerButton"
@@ -482,9 +453,9 @@
 
 
 
-            <!-- ==========================
+            <!-- =================================
                  一個字一個字提示
-            =========================== -->
+            ================================= -->
 
             <button
                 id="hintButton"
@@ -503,9 +474,9 @@
 
 
 
-            <!-- ==========================
+            <!-- =================================
                  下一題
-            =========================== -->
+            ================================= -->
 
             <button
                 id="nextButton"
@@ -518,9 +489,9 @@
 
 
 
-            <!-- ==========================
+            <!-- =================================
                  回首頁
-            =========================== -->
+            ================================= -->
 
             <button
                 id="backButton"
@@ -545,7 +516,7 @@
 
 
 /* ==========================================
-   題目資料
+   題目
 ========================================== */
 
 const questions = [
@@ -599,7 +570,7 @@ const questions = [
 
 
 /* ==========================================
-   狀態
+   測驗狀態
 ========================================== */
 
 let currentQuestion = 0;
@@ -611,7 +582,7 @@ let revealedCount = 0;
 
 
 /* ==========================================
-   取得 DOM
+   DOM
 ========================================== */
 
 const homePage =
@@ -682,9 +653,7 @@ function createQuestionList() {
 
             button.addEventListener(
                 "click",
-                function(event) {
-
-                    event.preventDefault();
+                function() {
 
                     startQuiz(index);
 
@@ -702,7 +671,7 @@ function createQuestionList() {
 
 
 /* ==========================================
-   開始指定題目
+   開始題目
 ========================================== */
 
 function startQuiz(index) {
@@ -790,9 +759,14 @@ function shuffleArray(array) {
 
 function showQuizPage() {
 
-    homePage.classList.add("hidden");
+    homePage.classList.add(
+        "hidden"
+    );
 
-    quizPage.classList.remove("hidden");
+
+    quizPage.classList.remove(
+        "hidden"
+    );
 
 
     loadQuestion();
@@ -833,20 +807,22 @@ function loadQuestion() {
         item.question;
 
 
-
     /* 清除完整答案 */
 
     fullAnswer.textContent = "";
 
-    fullAnswer.classList.add("hidden");
-
+    fullAnswer.classList.add(
+        "hidden"
+    );
 
 
     /* 清除提示 */
 
     hintAnswer.textContent = "";
 
-    hintAnswer.classList.add("hidden");
+    hintAnswer.classList.add(
+        "hidden"
+    );
 
 
     revealedCount = 0;
@@ -860,7 +836,7 @@ function loadQuestion() {
 
 
 /* ==========================================
-   顯示完整答案
+   完整答案
 ========================================== */
 
 function showFullAnswer() {
@@ -886,7 +862,7 @@ function showFullAnswer() {
 
 
 /* ==========================================
-   判斷標點符號
+   判斷是否為標點
 ========================================== */
 
 function isPunctuation(char) {
@@ -919,7 +895,7 @@ function buildHint(answer, count) {
 
 
         /*
-         * 已經顯示的字
+         * 已經顯示
          */
 
         if (i < count) {
@@ -930,8 +906,7 @@ function buildHint(answer, count) {
 
 
         /*
-         * 標點符號
-         * 永遠直接顯示
+         * 標點符號自動顯示
          */
 
         else if (
@@ -982,8 +957,7 @@ function showNextCharacter() {
 
 
     /*
-     * 如果目前位置是標點符號，
-     * 自動跳過。
+     * 先跳過標點
      */
 
     while (
@@ -999,12 +973,11 @@ function showNextCharacter() {
 
 
     /*
-     * 如果已經完成
+     * 已經完成
      */
 
     if (
-        revealedCount >=
-        answer.length
+        revealedCount >= answer.length
     ) {
 
         hintAnswer.textContent =
@@ -1021,14 +994,15 @@ function showNextCharacter() {
 
 
     /*
-     * 顯示下一個「字」
+     * 顯示一個字
      */
 
     revealedCount++;
 
 
     /*
-     * 顯示後，再自動跳過標點符號
+     * 顯示完這個字後，
+     * 直接跳過後面的標點
      */
 
     while (
@@ -1055,12 +1029,11 @@ function showNextCharacter() {
 
 
     /*
-     * 如果已經全部完成
+     * 完成
      */
 
     if (
-        revealedCount >=
-        answer.length
+        revealedCount >= answer.length
     ) {
 
         hintButton.textContent =
@@ -1110,7 +1083,7 @@ function nextQuestion() {
 
 
 /* ==========================================
-   回到首頁
+   回首頁
 ========================================== */
 
 function backToHome() {
@@ -1140,9 +1113,7 @@ function backToHome() {
 
 randomButton.addEventListener(
     "click",
-    function(event) {
-
-        event.preventDefault();
+    function() {
 
         startRandomQuiz();
 
@@ -1152,9 +1123,7 @@ randomButton.addEventListener(
 
 answerButton.addEventListener(
     "click",
-    function(event) {
-
-        event.preventDefault();
+    function() {
 
         showFullAnswer();
 
@@ -1162,11 +1131,22 @@ answerButton.addEventListener(
 );
 
 
+/*
+ * ⭐ 這裡是最重要的地方
+ *
+ * 直接使用 click。
+ *
+ * 不使用 touchstart。
+ * 不使用 touchend。
+ * 不使用全域 touchend 攔截。
+ *
+ * 這樣快速連點時，
+ * 每一次 click 都可以正常執行。
+ */
+
 hintButton.addEventListener(
     "click",
-    function(event) {
-
-        event.preventDefault();
+    function() {
 
         showNextCharacter();
 
@@ -1176,9 +1156,7 @@ hintButton.addEventListener(
 
 nextButton.addEventListener(
     "click",
-    function(event) {
-
-        event.preventDefault();
+    function() {
 
         nextQuestion();
 
@@ -1188,9 +1166,7 @@ nextButton.addEventListener(
 
 backButton.addEventListener(
     "click",
-    function(event) {
-
-        event.preventDefault();
+    function() {
 
         backToHome();
 
@@ -1200,82 +1176,19 @@ backButton.addEventListener(
 
 
 /* ==========================================
-   iPhone Safari 防雙擊放大
+   iPhone Safari 手勢處理
 ========================================== */
 
-let lastTouchTime = 0;
+/*
+ * 不攔截 touchend。
+ *
+ * 不攔截 dblclick。
+ *
+ * 不會影響快速按鈕。
+ *
+ * 只阻止 Safari 的 pinch gesture。
+ */
 
-
-document.addEventListener(
-    "touchend",
-    function(event) {
-
-        const now =
-            Date.now();
-
-
-        /*
-         * 如果短時間內再次觸碰，
-         * 阻止 Safari 的雙擊縮放。
-         */
-
-        if (
-            now - lastTouchTime <
-            300
-        ) {
-
-            if (
-                event.target.closest(
-                    "button"
-                )
-            ) {
-
-                event.preventDefault();
-
-            }
-
-        }
-
-
-        lastTouchTime = now;
-
-    },
-    {
-        passive: false
-    }
-);
-
-
-
-/* ==========================================
-   防止雙擊事件
-========================================== */
-
-document.addEventListener(
-    "dblclick",
-    function(event) {
-
-        if (
-            event.target.closest(
-                "button"
-            )
-        ) {
-
-            event.preventDefault();
-
-        }
-
-    },
-    {
-        passive: false
-    }
-);
-
-
-
-/* ==========================================
-   防止 iPhone Safari 手勢縮放
-========================================== */
 
 document.addEventListener(
     "gesturestart",
