@@ -1,4 +1,5 @@
-const CACHE_NAME = "military-quiz-v1";
+
+const CACHE_NAME = "military-quiz-v2";
 
 const FILES_TO_CACHE = [
     "./",
@@ -6,7 +7,7 @@ const FILES_TO_CACHE = [
     "./manifest.json"
 ];
 
-// 安裝 Service Worker
+// 安裝新版 Service Worker
 self.addEventListener("install", function(event) {
     event.waitUntil(
         caches.open(CACHE_NAME).then(function(cache) {
@@ -17,14 +18,15 @@ self.addEventListener("install", function(event) {
     self.skipWaiting();
 });
 
-// 啟用新的 Service Worker
+// 啟用新版並清除舊快取
 self.addEventListener("activate", function(event) {
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
             return Promise.all(
                 cacheNames
                     .filter(function(cacheName) {
-                        return cacheName !== CACHE_NAME;
+                        return cacheName.startsWith("military-quiz-") &&
+                               cacheName !== CACHE_NAME;
                     })
                     .map(function(cacheName) {
                         return caches.delete(cacheName);
@@ -36,41 +38,42 @@ self.addEventListener("activate", function(event) {
     self.clients.claim();
 });
 
-// 處理網頁請求
+// 網頁請求：有網路時優先取得最新版本
 self.addEventListener("fetch", function(event) {
+
+    if (event.request.method !== "GET") {
+        return;
+    }
+
     event.respondWith(
-        caches.match(event.request).then(function(cachedResponse) {
+        fetch(event.request)
+            .then(function(networkResponse) {
 
-            // 有快取就直接使用
-            if (cachedResponse) {
-                return cachedResponse;
-            }
+                if (
+                    networkResponse &&
+                    networkResponse.status === 200 &&
+                    networkResponse.type === "basic"
+                ) {
+                    const responseToCache = networkResponse.clone();
 
-            // 沒有快取就嘗試從網路取得
-            return fetch(event.request)
-                .then(function(networkResponse) {
+                    caches.open(CACHE_NAME).then(function(cache) {
+                        cache.put(event.request, responseToCache);
+                    });
+                }
 
-                    // 將取得的內容加入快取
-                    if (
-                        networkResponse &&
-                        networkResponse.status === 200 &&
-                        networkResponse.type === "basic"
-                    ) {
-                        const responseToCache = networkResponse.clone();
+                return networkResponse;
+            })
+            .catch(function() {
+                return caches.match(event.request).then(function(cachedResponse) {
 
-                        caches.open(CACHE_NAME).then(function(cache) {
-                            cache.put(event.request, responseToCache);
-                        });
+                    if (cachedResponse) {
+                        return cachedResponse;
                     }
 
-                    return networkResponse;
-                })
-                .catch(function() {
-                    // 沒網路時，如果是網頁就回到首頁
                     if (event.request.mode === "navigate") {
                         return caches.match("./index.html");
                     }
                 });
-        })
+            })
     );
 });
