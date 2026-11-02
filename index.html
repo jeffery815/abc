@@ -210,7 +210,11 @@
             background: #22a06b;
             color: white;
         }
-
+        
+.prev-btn {
+    background: #64748b;
+    color: white;
+}
 
         .back-btn {
             background: #777;
@@ -473,7 +477,14 @@
             </div>
 
 
+<button
+    id="prevButton"
+    class="prev-btn"
+    type="button">
 
+    ⬅️ 上一題
+
+</button>
             <!-- =================================
                  下一題
             ================================= -->
@@ -898,7 +909,10 @@ const answerButton =
 
 const nextButton =
     document.getElementById("nextButton");
-
+    
+const prevButton =
+    document.getElementById("prevButton");
+    
 const backButton =
     document.getElementById("backButton");
 
@@ -1364,7 +1378,32 @@ function nextQuestion() {
 
 }
 
+/* ==========================================
+   上一題
+========================================== */
 
+function prevQuestion() {
+
+    if (currentQuestion > 0) {
+
+        currentQuestion--;
+
+        loadQuestion();
+
+        window.scrollTo(
+            0,
+            0
+        );
+
+    }
+
+    else {
+
+        alert("你在第一題！");
+
+    }
+
+}
 
 /* ==========================================
    回首頁
@@ -1447,6 +1486,14 @@ nextButton.addEventListener(
     }
 );
 
+prevButton.addEventListener(
+    "click",
+    function() {
+
+        prevQuestion();
+
+    }
+);
 
 backButton.addEventListener(
     "click",
