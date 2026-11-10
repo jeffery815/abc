@@ -1407,7 +1407,11 @@ createQuestionList();
 <style>
   #extraQuestionPage .extra-controls button { margin-top: 12px; }
   #extraQuestionPage .extra-answer { white-space: pre-wrap; line-height: 1.8; }
-  #extraQuestionButton { margin-top: 12px; }
+  #extraQuestionButton {
+    margin-top: 12px;
+    background-color: #2879D0 !important;
+    color: #FFFFFF !important;
+}
 </style>
 <script>
 (() => {
@@ -1429,7 +1433,6 @@ createQuestionList();
   page.className = 'hidden';
   page.innerHTML = `
     <div class="card">
-      <div class="question-number">額外題目（共 1 題）</div>
       <div class="question"></div>
       <div class="extra-controls">
         <button type="button" class="answer-btn" id="extraShowAnswer">🔵 顯示完整答案</button>
