@@ -1403,6 +1403,82 @@ createQuestionList();
         });
     }
 </script>
+<!-- 額外題目：將這整段貼在原本 index.html 最後的 </body> 前面 -->
+<style>
+  #extraQuestionPage .extra-controls button { margin-top: 12px; }
+  #extraQuestionPage .extra-answer { white-space: pre-wrap; line-height: 1.8; }
+  #extraQuestionButton { margin-top: 12px; }
+</style>
+<script>
+(() => {
+  'use strict';
+  const title = '國軍教戰總則第十條';
+  const answer = '政治作戰國民革命戰爭，以武力為中心之思想總體戰；而政治作戰乃以思想為主導，以組織為骨幹，團結官兵，壯大自己，瓦解敵人。我全體官兵必須堅定國家、責任、榮譽三大信念，嚴肅革命紀律，提高保防警覺，激勵高昂士氣，發揚革命精神，堅定戰鬥意志並靈活運用政治作戰諸戰法，以確保軍事任務之達成。';
+  const home = document.getElementById('homePage');
+  const quiz = document.getElementById('quizPage');
+  const random = document.getElementById('randomButton');
+  if (!home || !quiz || !random) return;
+  const btn = document.createElement('button');
+  btn.id = 'extraQuestionButton';
+  btn.type = 'button';
+  btn.className = 'question-btn';
+  btn.textContent = '📝 國軍教戰總則';
+  random.insertAdjacentElement('afterend', btn);
+  const page = document.createElement('div');
+  page.id = 'extraQuestionPage';
+  page.className = 'hidden';
+  page.innerHTML = `
+    <div class="card">
+      <div class="question-number">額外題目（共 1 題）</div>
+      <div class="question"></div>
+      <div class="extra-controls">
+        <button type="button" class="answer-btn" id="extraShowAnswer">🔵 顯示完整答案</button>
+        <div id="extraFullAnswer" class="answer extra-answer hidden"></div>
+        <button type="button" class="hint-btn" id="extraHint">🟡 一個字一個字提示</button>
+        <div id="extraHintAnswer" class="hint-answer extra-answer hidden"></div>
+        <button type="button" class="back-btn" id="extraBack">← 回到題目選擇</button>
+      </div>
+    </div>`;
+  quiz.insertAdjacentElement('afterend', page);
+  page.querySelector('.question').textContent = title;
+  const full = page.querySelector('#extraFullAnswer');
+  const hint = page.querySelector('#extraHintAnswer');
+  const hintBtn = page.querySelector('#extraHint');
+  const chars = Array.from(answer);
+  let count = 0;
+  const punctuation = /[\s.,!?，。！？、；：：「」『』（）()〖〗《》〈〉…—\-_]/;
+  btn.addEventListener('click', () => {
+    count = 0;
+    full.textContent = '';
+    full.classList.add('hidden');
+    hint.textContent = '';
+    hint.classList.add('hidden');
+    hintBtn.textContent = '🟡 一個字一個字提示';
+    home.classList.add('hidden');
+    quiz.classList.add('hidden');
+    page.classList.remove('hidden');
+    window.scrollTo(0, 0);
+  });
+  page.querySelector('#extraShowAnswer').addEventListener('click', () => {
+    full.textContent = answer;
+    full.classList.remove('hidden');
+  });
+  hintBtn.addEventListener('click', () => {
+    if (count >= chars.length) return;
+    count++;
+    while (count < chars.length && punctuation.test(chars[count])) count++;
+    hint.textContent = chars.slice(0, count).join('');
+    hint.classList.remove('hidden');
+    if (count >= chars.length) hintBtn.textContent = '✅ 提示完成';
+  });
+  page.querySelector('#extraBack').addEventListener('click', () => {
+    page.classList.add('hidden');
+    quiz.classList.add('hidden');
+    home.classList.remove('hidden');
+    window.scrollTo(0, 0);
+  });
+})();
+</script>
 
 </body>
 
